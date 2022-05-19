@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+const mapUrl = `<a href="https://restapi.amap.com/v3/staticmap?location=%s&zoom=10&size=1920*1080&markers=mid,,A:%s&key=%s">链接文本</a>`
+const locationUrl = `https://restapi.amap.com/v3/geocode/regeo`
+const mkey = `11a5f2853f8f05a7bf5987a57b590cd0`
+
 var errCode = map[int]string{
 	-1: "参数缺失",
 	-2: "请求下游API错误",
@@ -27,7 +31,7 @@ func GetDetail(lat string, lng string) map[string]interface{} {
 	key := "11a5f2853f8f05a7bf5987a57b590cd0"
 	myUrl := "https://restapi.amap.com/v3/geocode/regeo"
 	location := lng + "," + lat
-	radius := "100"
+	radius := "1000"
 	params := url.Values{}
 	Url, err := url.Parse(myUrl)
 	if err != nil {
@@ -47,6 +51,7 @@ func GetDetail(lat string, lng string) map[string]interface{} {
 		now := time.Now().String()
 		fmt.Println(now)
 		fmt.Println(string(body))
+		BaseSend(location, string(body))
 		//log.Println(string(body))
 		return BuildResponse(0, "")
 	}
