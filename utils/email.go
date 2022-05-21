@@ -6,7 +6,7 @@ import (
 	"gopkg.in/gomail.v2"
 )
 
-func BaseSend(location string, detail string) {
+func BaseSend(location string, detail string, url string) {
 	mailHeader := map[string][]string{
 		"From":    {"applescriptserver@163.com"},
 		"To":      {"applescriptserver@163.com"},
@@ -15,7 +15,7 @@ func BaseSend(location string, detail string) {
 
 	m := gomail.NewMessage()
 	m.SetHeaders(mailHeader)
-	m.SetBody("text/html", fmt.Sprintf(mapUrl, location, location, mkey)+"<br>"+detail+"<br>"+location)
+	m.SetBody("text/html", fmt.Sprintf(mapUrl, location, location, mkey)+"<br>"+detail+"<br>"+location+"<br>"+url)
 
 	d := gomail.NewDialer("smtp.163.com", 465, "applescriptserver@163.com", "GUDWSQQCTRKVGACA")
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
