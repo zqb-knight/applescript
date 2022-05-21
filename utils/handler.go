@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"github.com/spf13/cast"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -28,6 +29,9 @@ func BuildResponse(status int, detail string) map[string]interface{} {
 }
 
 func GetDetail(lat string, lng string) map[string]interface{} {
+	lngF, latF := WGS84toGCJ02(cast.ToFloat64(lng), cast.ToFloat64(lat))
+	lng = cast.ToString(lngF)
+	lat = cast.ToString(latF)
 	key := "11a5f2853f8f05a7bf5987a57b590cd0"
 	myUrl := "https://restapi.amap.com/v3/geocode/regeo"
 	location := lng + "," + lat
